@@ -7,7 +7,26 @@ Plugin 'gmark/vundle'
 
 " Bundle后的插件名来自于http://vim-scripts.org/vim/scripts.html的Name列
 " Add all your plugins here
+" 折叠插件
+Plugin 'tmhedberg/SimpylFold'
 
+" 配色插件
+Plugin 'jnurmine/Zenburn'
+
+" 文件浏览,树形结构
+Plugin 'scrooloose/nerdtree'
+
+" 对上一个插件的补充,可用tab键
+Plugin 'jistr/vim-nerdtree-tabs'
+
+" 在vim中搜索任何文件
+Plugin 'kien/ctrlp.vim'
+
+" git插件
+Plugin 'tpope/vim-fugitive'
+
+" 工具栏
+Plugin 'Lokaltog/vim-powerline'
 
 " All of your plugins must be added before the following line
 call vundle#end()
@@ -76,7 +95,17 @@ set noswapfile
 "粘贴模式
 :set pastetoggle=<F11>
 
-""定义函数SetTitle,自动插入文件
+" 突出显示当前行
+set cursorline
+
+"搜索忽略大小写
+set ignorecase
+
+"搜索逐字符高亮
+set hlsearch
+set incsearch
+
+" 定义函数SetTitle,自动插入文件
 func SetTitle()
     call setline(1, "\/**")
     call setline(2, " * Copyright(c) 2017 Shenzhen shenbaise9527")
@@ -129,6 +158,9 @@ endfunction
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%121v.\+/
 
+" 标示不必要的空白字符,autocmd可以缩写为au
+" au BufRead,BufNewFile *.py,*.pyw,*.c,*.cpp,*.hpp,*.h match BadWhitespace /\s\+$/
+
 "winmanager
 let g:winManagerWindowLayout='TagList,FileExplorer'
 let g:winManagerWidth=40
@@ -141,6 +173,45 @@ let g:miniBufExplMapWindowNavVim=1
 
 "a.vim
 map <F12> :A<CR>
+
+"配色
+colors zenburn
+
+" 看到折叠代码的文档字符串
+let g:SimpylFold_docstring_preview=1
+
+" NERDTree
+map <F3> :NERDTreeMirror<CR>
+map <F3> :NERDTreeToggle<CR>
+let g:NERDTreeWinPos="right"
+let g:NERDTreeWinSize=25
+let g:NERDTreeShowLineNumbers=1
+let g:neocomplcache_enable_at_startup=1
+" o 打开关闭文件或者目录
+" t 在标签页中打开
+" T 在后台标签页中打开
+" ! 执行此文件
+" p 到上层目录
+" P 到根目录
+" K 到第一个节点
+" J 到最后一个节点
+" u 打开上层目录
+" m 显示文件系统菜单（添加、删除、移动操作）
+" ? 帮助
+" q 关闭
+" I 切换是否显示隐藏文件
+" F 切换是否显示文件
+" B 切换是否显示书签
+" f 切换是否使用文件过滤器
+" R 递归刷新根结点
+" r 递归刷新选中目录
+
+" powerline begin----
+let g:Powerline_symbols='fancy'
+set t_Co=256
+let Powerline_symbols='compatible'
+
+" powerline end----
 
 "----YCM begin----
 set runtimepath+=~/.vim/bundle/YouCompleteMe
