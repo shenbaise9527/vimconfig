@@ -1,0 +1,186 @@
+" Vundle start--------
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+Plugin 'gmark/vundle'
+
+" Bundle后的插件名来自于http://vim-scripts.org/vim/scripts.html的Name列
+" Add all your plugins here
+
+
+" All of your plugins must be added before the following line
+call vundle#end()
+filetype plugin indent on
+" Vundle end----------
+
+"开启语法高亮
+syntax on
+
+"根据文件类型设置自动缩进
+filetype indent plugin on
+
+"显示当前的行号列号
+set ruler
+
+"在状态栏显示正在输入的命令
+set showcmd
+
+"关闭/打开配对括号高亮
+"NoMatchParen
+"DoMatchParen
+
+"显示行号
+set number
+
+"为方便起见,用F2开启/关闭行号显示
+nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
+
+"启动modeline
+set modeline
+
+"为深色背景调整配色
+set background=dark
+
+"设置文件格式
+set encoding=utf-8
+set fileencoding=utf-8
+
+"allow backspacing over everything in insert mode
+set bs=indent,eol,start
+
+"Tab宽度自动缩进字数
+set ts=4
+"空格代替制表符
+set expandtab
+%retab!
+
+set shiftwidth=4
+
+"自动缩进
+set autoindent
+set cindent
+set smartindent
+
+set t_Co=256
+set nowrap
+set history=500  "Keep 500 lines of command line history
+
+"总是显示状态行
+set laststatus=2
+
+"禁止生成临时文件
+set nobackup
+set noswapfile
+
+"粘贴模式
+:set pastetoggle=<F11>
+
+""定义函数SetTitle,自动插入文件
+func SetTitle()
+    call setline(1, "\/**")
+    call setline(2, " * Copyright(c) 2017 Shenzhen shenbaise9527")
+    call setline(3, " * All Rights Reserved")
+    call setline(4, " * @file      ".expand("%"))
+    call setline(5, " * @author     shenbaise9527")
+    call setline(6, " * @date      ".strftime("%Y-%m-%d %H:%M:%S"))
+    call setline(7, " * @version   1.0")
+    call setline(8, " * @note      ")
+    call setline(9, " *\/")
+    call setline(10, "")
+    call setline(11, "")
+    call setline(12, "")
+endfunc
+
+map <F10> :call SetTitle()<CR>
+
+"打开文件类型检测,加了这句才可以用智能补全
+set completeopt=menu,menuone,longest
+
+"Fast reloading of the .vimrc
+"map <silent><leader> ss:source ~/.vimrc<cr>
+
+"Fast editing of .vimrc
+"map <silent><leader> ee:e ~/.vimrc<cr>
+
+"when .vimrc is edited,reload it
+"autocmd! bufwritepost .vimrc source ~/.vimrc
+
+set showmatch
+
+" 自动完成括号和引号
+:inoremap ( ()<ESC>i
+:inoremap ) <c-r>=ClosePair(')')<CR>
+:inoremap { {<CR>}<ESC>o
+:inoremap } <c-r>=ClosePair('}')<CR>
+:inoremap [ []<ESC>i
+:inoremap ] <c-r>=ClosePair(']')<CR>
+:inoremap " ""<ESC>i
+:inoremap ' ''<ESC>i
+function! ClosePair(char)
+    if getline('.')[col('.')-1] == a:char
+        return "\<Right>"
+    else 
+        return a:char
+    endif
+endfunction
+
+" 行字符数超过120就把字符的背景设置为红色
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%121v.\+/
+
+"winmanager
+let g:winManagerWindowLayout='TagList,FileExplorer'
+let g:winManagerWidth=40
+nmap <C-W><C-F> :FirstExplorerWindow<CR>
+nmap <C-W><C-B> :BottomExplorerWindow<CR>
+nmap wm :WMToggle<CR>
+
+"minibuferpl.vim for top buff list
+let g:miniBufExplMapWindowNavVim=1
+
+"a.vim
+map <F12> :A<CR>
+
+"----YCM begin----
+set runtimepath+=~/.vim/bundle/YouCompleteMe
+"开启YCM基于标签引擎
+let g:ycm_collect_identifiers_from_tags_files=1
+"注释与字符串中的内容也用于补全
+let g:ycm_collect_identifiers_from_comments_and_strings=1
+let g:syntastic_ignore_files=[".*\.py$"]
+"语法关键字补全
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_complete_in_comments=1
+let g:ycm_confirm_extra_conf=0
+"映射按键,没有这个会拦截掉TAB,导致其它插件的TAB不可用
+let g:ycm_key_list_select_completion=['<c-n>', '<Down']
+let g:ycm_key_list_previous_completion=['<c-p>', '<Up']
+"在注释输入中也能补全
+let g:ycm_complete_in_comments=1
+"在字符串输入中也能补全
+let g:ycm_complete_in_strings=1
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+"禁用语法检查
+let g:ycm_show_diagnostics_ui=0
+"回车即选中当前项
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" |
+"跳转到定义处
+nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>|
+"从第二个键入字符就开始罗列匹配项
+"let g:ycm_min_num_of_chars_for_completion=2
+"----YCM end----
+
+"----python----
+"python文件中建议用空格代替TAB,且缩进应为4个空格
+autocmd FileType python setlocal et sta sw=4 sts=4
+
+"代码折叠可以只以缩进为依据:
+autocmd FileType python setlocal foldmethod=indent
+"默认展开所有代码
+set foldlevel=99
+
+" press space to fold/unfold code
+nnoremap <space> za
+vnoremap <space> zf
+
