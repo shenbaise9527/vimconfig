@@ -7,7 +7,8 @@ Plugin 'gmark/vundle'
 
 " Bundle后的插件名来自于http://vim-scripts.org/vim/scripts.html的Name列
 " Add all your plugins here
-
+" git submodule add https://github.com/Valloric/YouCompleteMe.git
+" ~/.vim/bundle/YouCompleteMe
 Plugin 'Valloric/YouCompleteMe'
 
 " 折叠插件
