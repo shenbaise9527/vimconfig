@@ -28,10 +28,87 @@ Plugin 'tpope/vim-fugitive'
 " 工具栏
 Plugin 'Lokaltog/vim-powerline'
 
+" python代码检查flake8
+Plugin 'nvie/vim-flake8'
+
+" 语法检查
+Plugin 'scrooloose/syntastic'
+
+" 自动缩进符合PEP8标准
+Plugin 'vim-scripts/indentpython.vim'
+
+" 缩进指示线
+Plugin 'Yggdroot/indentLine'
+
+" 多行注释
+Plugin 'scrooloose/nerdcommenter'
+
+" python
+Plugin 'python-mode/python-mode'
+
+Plugin 'altercation/vim-colors-solarized'
+
+Plugin 'sjl/gundo.vim'
+
+Plugin 'SirVer/ultisnips'
+
 " All of your plugins must be added before the following line
 call vundle#end()
 filetype plugin indent on
 " Vundle end----------
+
+let python_highlight_all = 1
+
+" 定义快捷键的前缀,即<Leader>
+let mapleader=";"
+
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至VIM
+nmap <leader>p "+p
+
+" 定义快捷键关闭当前分割窗口
+nmap <leader>q :q<CR>
+
+" 定义快捷键保存当前窗口内容
+nmap <leader>w :w<CR>
+
+" 定义快捷键保存所有窗口内容并退出vim
+nmap <leader>WQ :wa<CR>:q<CR>
+
+" 不做任何保存,直接退出vim
+nmap <leader>Q :qa!<CR>
+
+" 依次遍历子窗口
+nnoremap nw <C-W><C-W>
+
+" 跳转至右方的窗口
+nnoremap <leader>lw <C-W>l
+
+" 跳转至左方的窗口
+nnoremap <leader>hw <C-W>h
+
+" 跳转至上方的窗口
+nnoremap <leader>kw <C-W>k
+
+" 跳转至下方的窗口
+nnoremap <leader>jw <C-W>j
+
+" 定义快捷键在结对符之间跳转,助记pair
+nmap <leader>pa %
+
+" 禁止光标闪烁
+set gcr=a:block-blinkon0
+
+" 禁止显示滚动条
+" set guioptions-=l
+" set guioptions-=L
+" set guioptions-=r
+" set guioptions-=R
+
+" 禁止显示菜单和工具条
+" set guioptions-=m
+" set guioptions-=T
 
 "开启语法高亮
 syntax on
@@ -44,6 +121,9 @@ set ruler
 
 "在状态栏显示正在输入的命令
 set showcmd
+
+" vim自身命令行模式智能补全
+set wildmenu
 
 "关闭/打开配对括号高亮
 "NoMatchParen
@@ -74,7 +154,11 @@ set ts=4
 set expandtab
 %retab!
 
+" 设置格式化时制表符占用空格数
 set shiftwidth=4
+
+" 设置编辑时制表符占用空格数
+set tabstop=4
 
 "自动缩进
 set autoindent
@@ -88,6 +172,9 @@ set history=500  "Keep 500 lines of command line history
 "总是显示状态行
 set laststatus=2
 
+"距离顶部或底部5行
+set scrolloff=5
+
 "禁止生成临时文件
 set nobackup
 set noswapfile
@@ -97,6 +184,9 @@ set noswapfile
 
 " 突出显示当前行
 set cursorline
+
+" 突出显示当前列
+set cursorcolumn
 
 "搜索忽略大小写
 set ignorecase
@@ -110,18 +200,35 @@ func SetTitle()
     call setline(1, "\/**")
     call setline(2, " * Copyright(c) 2017 Shenzhen shenbaise9527")
     call setline(3, " * All Rights Reserved")
-    call setline(4, " * @file      ".expand("%"))
-    call setline(5, " * @author     shenbaise9527")
-    call setline(6, " * @date      ".strftime("%Y-%m-%d %H:%M:%S"))
-    call setline(7, " * @version   1.0")
-    call setline(8, " * @note      ")
-    call setline(9, " *\/")
-    call setline(10, "")
+    call setline(4, " * @File        : ".expand("%"))
+    call setline(5, " * @Author      : shenbaise9527")
+    call setline(6, " * @Create      : ".strftime("%Y-%m-%d %H:%M:%S"))
+    call setline(7, " * @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+    call setline(8, " * @version     : 1.0")
+    call setline(9, " * @Description : ")
+    call setline(10, " *\/")
     call setline(11, "")
     call setline(12, "")
+    call setline(13, "")
+endfunc
+
+func DateModified()
+    let zcur_line=line(".")
+    let zcur_clo=virtcol(".")
+    call cursor(1,1)
+    if search('@Modified')!=0
+        let line=line('.')
+        if line<9
+            call setline(line, " * @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+        endif
+    endif
+    call cursor(zcur_line,zcur_clo)
 endfunc
 
 map <F10> :call SetTitle()<CR>
+au BufNewFile *.py, *.cpp, *.h, *.hpp, *.sh exec ":call SetTitle()"
+" au FileWritePre,BufWritePre *.cpp, *.h, *.hpp, *.py, *.sh ks|call DateModified()|'s
+au FileWritePre,BufWritePre *.cpp, *.h, *.hpp, *.py, *.sh call DateModified()
 
 "打开文件类型检测,加了这句才可以用智能补全
 set completeopt=menu,menuone,longest
@@ -187,6 +294,7 @@ let g:NERDTreeWinPos="right"
 let g:NERDTreeWinSize=25
 let g:NERDTreeShowLineNumbers=1
 let g:neocomplcache_enable_at_startup=1
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 " o 打开关闭文件或者目录
 " t 在标签页中打开
 " T 在后台标签页中打开
@@ -207,6 +315,7 @@ let g:neocomplcache_enable_at_startup=1
 " r 递归刷新选中目录
 
 " powerline begin----
+let g:Powerline_colorscheme='solarized256'
 let g:Powerline_symbols='fancy'
 set t_Co=256
 let Powerline_symbols='compatible'
@@ -234,17 +343,36 @@ let g:ycm_complete_in_strings=1
 let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 "禁用语法检查
 let g:ycm_show_diagnostics_ui=0
+" python解释器路径
+let g:ycm_path_to_python_interpreter='/usr/bin/python'
 "回车即选中当前项
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" |
-"跳转到定义处
-nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>|
 "从第二个键入字符就开始罗列匹配项
 "let g:ycm_min_num_of_chars_for_completion=2
+
+nnoremap <leader>yd :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>yf :YcmCompleter GoToDefinition<CR>
+"跳转到定义处
+nnoremap <leader>yg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" show error
+nnoremap <leader>ye :YcmDiags<CR>
+" force to recompile files
+nnoremap <leader>yr :YcmForceCompileAndDiagnostics<CR>
 "----YCM end----
 
 "----python----
 "python文件中建议用空格代替TAB,且缩进应为4个空格
 autocmd FileType python setlocal et sta sw=4 sts=4
+
+" 支持PEP8风格的缩进
+" au BufNewFile,BufRead *.py
+""            \ set tabstop=4
+""            \ set softtabstop=4
+""            \ set shiftwidth=4
+""            \ set textwidth=79
+""            \ set expandtab
+""            \ set autoindent
+""            \ set fileformat=unix
 
 "代码折叠可以只以缩进为依据:
 autocmd FileType python setlocal foldmethod=indent
@@ -254,4 +382,8 @@ set foldlevel=99
 " press space to fold/unfold code
 nnoremap <space> za
 vnoremap <space> zf
+
+" 缩进指示线
+let g:indentLine_char='|'
+let g:indentLine_enabled=1
 
