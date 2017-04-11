@@ -49,3 +49,12 @@
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
+[submodule "/home/sky/.vim/bundle/vim-snippets"]
+	path = /home/sky/.vim/bundle/vim-snippets
+	url = https://github.com/honza/vim-snippets.git
+[submodule "/home/sky/.vim/bundle/vim-cpp-enhanced-highlight"]
+	path = /home/sky/.vim/bundle/vim-cpp-enhanced-highlight
+	url = https://github.com/octol/vim-cpp-enhanced-highlight.git
+[submodule "/home/sky/.vim/bundle/vim-fswitch"]
+	path = /home/sky/.vim/bundle/vim-fswitch
+	url = https://github.com/derekwyatt/vim-fswitch.git

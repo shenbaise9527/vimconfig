@@ -54,7 +54,15 @@ Plugin 'python-mode/python-mode'
 
 Plugin 'sjl/gundo.vim'
 
+" 代码模板
 Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
+" 语法高亮
+Plugin 'octol/vim-cpp-enhanced-highlight'
+
+" 在cpp和h之间切换,替换a.vim"
+Plugin 'derekwyatt/vim-fswitch'
 
 " All of your plugins must be added before the following line
 call vundle#end()
@@ -272,6 +280,12 @@ match OverLength /\%121v.\+/
 " 标示不必要的空白字符,autocmd可以缩写为au
 " au BufRead,BufNewFile *.py,*.pyw,*.c,*.cpp,*.hpp,*.h match BadWhitespace /\s\+$/
 
+" 基于语法或缩进进行代码折叠
+" set foldmethod=indent
+set foldmethod=syntax
+" 启动vim时关闭折叠
+set nofoldenable
+
 "winmanager
 let g:winManagerWindowLayout='TagList,FileExplorer'
 let g:winManagerWidth=40
@@ -282,8 +296,8 @@ nmap wm :WMToggle<CR>
 "minibuferpl.vim for top buff list
 let g:miniBufExplMapWindowNavVim=1
 
-"a.vim
-map <F12> :A<CR>
+" .cpp和.h之间切换
+nmap <silent><leader>sw :FSHere<CR>
 
 "配色
 colors zenburn
@@ -318,13 +332,36 @@ let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 " R 递归刷新根结点
 " r 递归刷新选中目录
 
+" nerdcommenter命令
+" ;cc 注释当前行和选中行
+" ;cn 没有发现和cc有区别
+" ;c<空格>
+" 如果被选区域有部分被注释,则对被选区域执行取消注释操作,其它情况执行反转注释操作
+" ;cm 对被选区域用一对注释符进行注释,前面的注释对每一行都会添加注释
+" ;ci 执行反转注释操作,选中区域注释部分取消注释,非注释部分添加注释
+" ;cs 添加性感的注释,代码开头介绍部分通常使用该注释
+" ;cy 添加注释,并复制被添加注释的部分
+" ;c$ 注释当前光标到该行结尾的内容
+" ;cA 跳转到该行结尾添加注释,并进入编辑模式
+" ;ca 转换注释的方式,比如:/**/和//
+" ;cl ;cb 左对齐和左右对齐，左右对齐主要针对/**/
+" ;cu 取消注释
+
 " powerline begin----
 " let g:Powerline_colorscheme='solarized256'
 let g:Powerline_symbols='fancy'
 set t_Co=256
 let Powerline_symbols='compatible'
-
 " powerline end----
+
+" gundo show undo window
+nnoremap <leader>gud :GundoToggle<CR>
+" let g:gundo_width=60
+" let g:gundo_preview_height=40
+let g:gundo_right=1
+
+" Ctrlp
+nnoremap <leader>ff :CtrlP<CR>
 
 "----YCM begin----
 " "set runtimepath+=~/.vim/bundle/YouCompleteMe
