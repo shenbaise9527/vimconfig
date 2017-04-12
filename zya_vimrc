@@ -278,7 +278,7 @@ highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%121v.\+/
 
 " 标示不必要的空白字符,autocmd可以缩写为au
-" au BufRead,BufNewFile *.py,*.pyw,*.c,*.cpp,*.hpp,*.h match BadWhitespace /\s\+$/
+" au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " 基于语法或缩进进行代码折叠
 " set foldmethod=indent
@@ -313,6 +313,12 @@ let g:NERDTreeWinSize=25
 let g:NERDTreeShowLineNumbers=1
 let g:neocomplcache_enable_at_startup=1
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
+" 显示隐藏文件
+let g:NERDTreeShowHidden=1
+" 子窗口不显示冗余帮助信息
+let g:NERDTreeMinimalUI=1
+" 删除文件时自动删除文件对应的buffer
+let g:NERDTreeAutoDeleteBuffer=1
 " o 打开关闭文件或者目录
 " t 在标签页中打开
 " T 在后台标签页中打开
@@ -331,6 +337,9 @@ let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 " f 切换是否使用文件过滤器
 " R 递归刷新根结点
 " r 递归刷新选中目录
+
+" map <leader>n <plug>NERDTreeTabsToggle<CR>
+" let g:nerdtree_tabs_open_on_console_startup=1
 
 " nerdcommenter命令
 " ;cc 注释当前行和选中行
@@ -355,7 +364,7 @@ let Powerline_symbols='compatible'
 " powerline end----
 
 " gundo show undo window
-nnoremap <leader>gud :GundoToggle<CR>
+nnoremap <leader>ud :GundoToggle<CR>
 " let g:gundo_width=60
 " let g:gundo_preview_height=40
 let g:gundo_right=1
@@ -389,7 +398,13 @@ let g:ycm_path_to_python_interpreter='/usr/bin/python'
 "回车即选中当前项
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" |
 "从第二个键入字符就开始罗列匹配项
-"let g:ycm_min_num_of_chars_for_completion=2
+let g:ycm_min_num_of_chars_for_completion=2
+" 补全后自动关闭预览窗口
+let g:ycm_autoclose_preview_window_after_completion=1
+" 禁止匹配缓存项,每次都重新生成缓存项
+let g:ycm_cache_omnifunc=0
+" 离开插入模式后自动关闭预览窗口
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 nnoremap <leader>yd :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>yf :YcmCompleter GoToDefinition<CR>
@@ -425,6 +440,8 @@ nnoremap <space> za
 vnoremap <space> zf
 
 " 缩进指示线
-let g:indentLine_char='|'
+let g:indentLine_char='┆'
 let g:indentLine_enabled=1
+" let g:indentLine_concealcursor='inc'
+" let g:indentLine_concealleavel=2
 
