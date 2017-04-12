@@ -207,23 +207,44 @@ set ignorecase
 set hlsearch
 set incsearch
 
+" 新建文件时,自动插入文件头
+autocmd BufNewFile *.py,*.cpp,*.[ch],*.hpp,*.sh exec ":call SetTitle()"
 " 定义函数SetTitle,自动插入文件
 func SetTitle()
-    call setline(1, "\/**")
-    call setline(2, " * Copyright(c) 2017 Shenzhen shenbaise9527")
-    call setline(3, " * All Rights Reserved")
-    call setline(4, " * @File        : ".expand("%"))
-    call setline(5, " * @Author      : shenbaise9527")
-    call setline(6, " * @Create      : ".strftime("%Y-%m-%d %H:%M:%S"))
-    call setline(7, " * @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
-    call setline(8, " * @version     : 1.0")
-    call setline(9, " * @Description : ")
-    call setline(10, " *\/")
-    call setline(11, "")
-    call setline(12, "")
-    call setline(13, "")
+    if &filetype == 'sh'
+        call setline(1, "\##########################################")
+        call setline(2, "\# Copyright(c) 2017 Shenzhen shenbaise9527")
+        call setline(3, "\# All Rights Reserved")
+        call setline(4, "\# @File        : ".expand("%"))
+        call setline(5, "\# @Author      : shenbaise9527")
+        call setline(6, "\# @Create      : ".strftime("%Y-%m-%d %H:%M:%S"))
+        call setline(7, "\# @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+        call setline(8, "\# @Description : ")
+        call setline(9, "\##########################################")
+        call setline(10, "\#!/bin/bash")
+        call setline(11, "")
+        call setline(12, "")
+        call setline(13, "")
+    else
+        call setline(1, "\/**")
+        call setline(2, " * Copyright(c) 2017 Shenzhen shenbaise9527")
+        call setline(3, " * All Rights Reserved")
+        call setline(4, " * @File        : ".expand("%"))
+        call setline(5, " * @Author      : shenbaise9527")
+        call setline(6, " * @Create      : ".strftime("%Y-%m-%d %H:%M:%S"))
+        call setline(7, " * @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+        call setline(8, " * @version     : 1.0")
+        call setline(9, " * @Description : ")
+        call setline(10, " *\/")
+        call setline(11, "")
+        call setline(12, "")
+        call setline(13, "")
+    endif
+    " 新建文件后,自动定位到文件末尾
+    autocmd BufNewFile * normal G
 endfunc
 
+autocmd FileWritePre,BufWritePre *.cpp,*.[ch],*.hpp,*.py call DateModified()
 func DateModified()
     let zcur_line=line(".")
     let zcur_clo=virtcol(".")
@@ -238,9 +259,6 @@ func DateModified()
 endfunc
 
 map <F10> :call SetTitle()<CR>
-au BufNewFile *.py, *.cpp, *.h, *.hpp, *.sh exec ":call SetTitle()"
-" au FileWritePre,BufWritePre *.cpp, *.h, *.hpp, *.py, *.sh ks|call DateModified()|'s
-au FileWritePre,BufWritePre *.cpp, *.h, *.hpp, *.py, *.sh call DateModified()
 
 "打开文件类型检测,加了这句才可以用智能补全
 set completeopt=menu,menuone,longest
@@ -255,6 +273,9 @@ set completeopt=menu,menuone,longest
 "autocmd! bufwritepost .vimrc source ~/.vimrc
 
 set showmatch
+
+" 当文件被改动时自动载入
+set autoread
 
 " 自动完成括号和引号
 :inoremap ( ()<ESC>i
