@@ -212,19 +212,31 @@ autocmd BufNewFile *.py,*.cpp,*.[ch],*.hpp,*.sh exec ":call SetTitle()"
 " 定义函数SetTitle,自动插入文件
 func SetTitle()
     if &filetype == 'sh'
-        call setline(1, "\##########################################")
-        call setline(2, "\# Copyright(c) 2017 Shenzhen shenbaise9527")
-        call setline(3, "\# All Rights Reserved")
-        call setline(4, "\# @File        : ".expand("%"))
-        call setline(5, "\# @Author      : shenbaise9527")
-        call setline(6, "\# @Create      : ".strftime("%Y-%m-%d %H:%M:%S"))
-        call setline(7, "\# @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
-        call setline(8, "\# @Description : ")
-        call setline(9, "\##########################################")
-        call setline(10, "\#!/bin/bash")
+        call setline(1, "\#!/bin/bash")
+        call setline(2, "\##########################################")
+        call setline(3, "\# Copyright(c) 2017 Shenzhen shenbaise9527")
+        call setline(4, "\# All Rights Reserved")
+        call setline(5, "\# @File        : ".expand("%"))
+        call setline(6, "\# @Author      : shenbaise9527")
+        call setline(7, "\# @Create      : ".strftime("%Y-%m-%d %H:%M:%S"))
+        call setline(8, "\# @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+        call setline(9, "\# @Description : ")
+        call setline(10, "\##########################################")
         call setline(11, "")
         call setline(12, "")
-        call setline(13, "")
+    elseif &filetype == 'python'
+        call setline(1, "\#!/usr/bin/env python")
+        call setline(2, "\##########################################")
+        call setline(3, "\# Copyright(c) 2017 Shenzhen shenbaise9527")
+        call setline(4, "\# All Rights Reserved")
+        call setline(5, "\# @File        : ".expand("%"))
+        call setline(6, "\# @Author      : shenbaise9527")
+        call setline(7, "\# @Create      : ".strftime("%Y-%m-%d %H:%M:%S"))
+        call setline(8, "\# @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+        call setline(9, "\# @Description : ")
+        call setline(10, "\##########################################")
+        call setline(11, "")
+        call setline(12, "")
     else
         call setline(1, "\/**")
         call setline(2, " * Copyright(c) 2017 Shenzhen shenbaise9527")
@@ -238,13 +250,13 @@ func SetTitle()
         call setline(10, " *\/")
         call setline(11, "")
         call setline(12, "")
-        call setline(13, "")
     endif
-    " 新建文件后,自动定位到文件末尾
-    autocmd BufNewFile * normal G
 endfunc
 
-autocmd FileWritePre,BufWritePre *.cpp,*.[ch],*.hpp,*.py call DateModified()
+" 新建文件后,自动定位到文件末尾
+autocmd BufNewFile * normal G
+
+autocmd FileWritePre,BufWritePre *.cpp,*.[ch],*.hpp,*.py,*.sh call DateModified()
 func DateModified()
     let zcur_line=line(".")
     let zcur_clo=virtcol(".")
@@ -252,7 +264,13 @@ func DateModified()
     if search('@Modified')!=0
         let line=line('.')
         if line<9
-            call setline(line, " * @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+            if &filetype == 'sh'
+                call setline(line, "\# @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+            elseif &filetype == 'python'
+                call setline(line, "\# @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+            else
+                call setline(line, " * @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+            endif
         endif
     endif
     call cursor(zcur_line,zcur_clo)
@@ -301,15 +319,9 @@ match OverLength /\%121v.\+/
 " 标示不必要的空白字符,autocmd可以缩写为au
 " au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-" 基于语法或缩进进行代码折叠
-" set foldmethod=indent
-set foldmethod=syntax
-" 启动vim时关闭折叠
-set nofoldenable
-
 "winmanager
-let g:winManagerWindowLayout='TagList,FileExplorer'
-let g:winManagerWidth=40
+let g:winManagerWindowLayout='TagList'
+let g:winManagerWidth=30
 nmap <C-W><C-F> :FirstExplorerWindow<CR>
 nmap <C-W><C-B> :BottomExplorerWindow<CR>
 nmap wm :WMToggle<CR>
@@ -323,9 +335,6 @@ nmap <silent><leader>sw :FSHere<CR>
 "配色
 colors zenburn
 
-" 看到折叠代码的文档字符串
-let g:SimpylFold_docstring_preview=1
-
 " NERDTree
 map <F3> :NERDTreeMirror<CR>
 map <F3> :NERDTreeToggle<CR>
@@ -335,7 +344,7 @@ let g:NERDTreeShowLineNumbers=1
 let g:neocomplcache_enable_at_startup=1
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 " 显示隐藏文件
-let g:NERDTreeShowHidden=1
+" let g:NERDTreeShowHidden=1
 " 子窗口不显示冗余帮助信息
 let g:NERDTreeMinimalUI=1
 " 删除文件时自动删除文件对应的buffer
@@ -377,9 +386,25 @@ let g:NERDTreeAutoDeleteBuffer=1
 " ;cl ;cb 左对齐和左右对齐，左右对齐主要针对/**/
 " ;cu 取消注释
 
+" 基于语法或缩进进行代码折叠
+" set foldmethod=indent
+set foldmethod=syntax
+" 启动vim时关闭折叠
+set nofoldenable
+
+"默认展开所有代码
+set foldlevel=99
+
+" 看到折叠代码的文档字符串
+let g:SimpylFold_docstring_preview=1
+
+" press space to fold/unfold code
+nnoremap <space> za
+"vnoremap <space> zf
+
 " powerline begin----
-" let g:Powerline_colorscheme='solarized256'
-let g:Powerline_symbols='fancy'
+let g:Powerline_colorscheme='solarized256'
+" let g:Powerline_symbols='fancy'
 set t_Co=256
 let Powerline_symbols='compatible'
 " powerline end----
@@ -392,6 +417,13 @@ let g:gundo_right=1
 
 " Ctrlp
 nnoremap <leader>ff :CtrlP<CR>
+
+" 缩进指示线
+let g:indentLine_char='┆'
+" let g:indentLine_char='|'
+let g:indentLine_enabled=1
+" let g:indentLine_concealcursor='inc'
+" let g:indentLine_concealleavel=2
 
 "----YCM begin----
 " "set runtimepath+=~/.vim/bundle/YouCompleteMe
@@ -416,8 +448,6 @@ let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 let g:ycm_show_diagnostics_ui=0
 " python解释器路径
 let g:ycm_path_to_python_interpreter='/usr/bin/python'
-"回车即选中当前项
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" |
 "从第二个键入字符就开始罗列匹配项
 let g:ycm_min_num_of_chars_for_completion=2
 " 补全后自动关闭预览窗口
@@ -426,6 +456,13 @@ let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_cache_omnifunc=0
 " 离开插入模式后自动关闭预览窗口
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+"回车即选中当前项
+inoremap <expr> <CR> pumvisible() ? '<C-y>' : '\<CR>'
+"上下左右键行为
+inoremap <expr> <Down> pumvisible() ? '\<C-n>' : '\<Down>'
+inoremap <expr> <Up> pumvisible() ? '\<C-p>' : '\<Up>'
+
+
 
 nnoremap <leader>yd :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>yf :YcmCompleter GoToDefinition<CR>
@@ -453,16 +490,17 @@ autocmd FileType python setlocal et sta sw=4 sts=4
 
 "代码折叠可以只以缩进为依据:
 autocmd FileType python setlocal foldmethod=indent
-"默认展开所有代码
-set foldlevel=99
 
-" press space to fold/unfold code
-nnoremap <space> za
-vnoremap <space> zf
-
-" 缩进指示线
-let g:indentLine_char='┆'
-let g:indentLine_enabled=1
-" let g:indentLine_concealcursor='inc'
-" let g:indentLine_concealleavel=2
-
+" 按F5运行python
+map <F5> :call RunPython()<CR>
+function RunPython()
+    let mp = &makeprg
+    let ef = &errorformat
+    let exeFile = expand("%:t")
+    setlocal makeprg=python\ -u
+    set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+    silent make %
+    copen
+    let &makeprg = mp
+    let &errorformat = ef
+endfunction
