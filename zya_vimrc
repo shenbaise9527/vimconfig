@@ -69,13 +69,12 @@ call vundle#end()
 filetype plugin indent on
 " Vundle end----------
 
-let python_highlight_all = 1
-
 " 定义快捷键的前缀,即<Leader>
 let mapleader=";"
 
 " 设置快捷键将选中文本块复制至系统剪贴板
 vnoremap <leader>y "+y
+
 " 设置快捷键将系统剪贴板内容粘贴至VIM
 nmap <leader>p "+p
 
@@ -122,47 +121,47 @@ nmap <leader>pa %
 " set guioptions-=m
 " set guioptions-=T
 
-"开启语法高亮
+" 开启语法高亮
 syntax on
 
-"根据文件类型设置自动缩进
+" 根据文件类型设置自动缩进
 filetype indent plugin on
 
-"显示当前的行号列号
+" 显示当前的行号列号
 set ruler
 
-"在状态栏显示正在输入的命令
+" 在状态栏显示正在输入的命令
 set showcmd
 
 " vim自身命令行模式智能补全
 set wildmenu
 
-"关闭/打开配对括号高亮
+" 关闭/打开配对括号高亮
 "NoMatchParen
 "DoMatchParen
 
-"显示行号
+" 显示行号
 set number
 
-"为方便起见,用F2开启/关闭行号显示
+" 为方便起见,用F2开启/关闭行号显示
 nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
 
-"启动modeline
+" 启动modeline
 set modeline
 
-"为深色背景调整配色
+" 为深色背景调整配色
 set background=dark
 
-"设置文件格式
+" 设置文件格式
 set encoding=utf-8
 set fileencoding=utf-8
 
-"allow backspacing over everything in insert mode
+" allow backspacing over everything in insert mode
 set bs=indent,eol,start
 
-"Tab宽度自动缩进字数
+" Tab宽度自动缩进字数
 set ts=4
-"空格代替制表符
+" 空格代替制表符
 set expandtab
 %retab!
 
@@ -172,7 +171,7 @@ set shiftwidth=4
 " 设置编辑时制表符占用空格数
 set tabstop=4
 
-"自动缩进
+" 自动缩进
 set autoindent
 set cindent
 set smartindent
@@ -181,17 +180,17 @@ set t_Co=256
 set nowrap
 set history=500  "Keep 500 lines of command line history
 
-"总是显示状态行
+" 总是显示状态行
 set laststatus=2
 
-"距离顶部或底部5行
+" 距离顶部或底部5行
 set scrolloff=5
 
-"禁止生成临时文件
+" 禁止生成临时文件
 set nobackup
 set noswapfile
 
-"粘贴模式
+" 粘贴模式
 :set pastetoggle=<F11>
 
 " 突出显示当前行
@@ -200,10 +199,10 @@ set cursorline
 " 突出显示当前列
 set cursorcolumn
 
-"搜索忽略大小写
+" 搜索忽略大小写
 set ignorecase
 
-"搜索逐字符高亮
+" 搜索逐字符高亮
 set hlsearch
 set incsearch
 
@@ -278,7 +277,7 @@ endfunc
 
 map <F10> :call SetTitle()<CR>
 
-"打开文件类型检测,加了这句才可以用智能补全
+" 打开文件类型检测,加了这句才可以用智能补全
 set completeopt=menu,menuone,longest
 
 "Fast reloading of the .vimrc
@@ -319,20 +318,20 @@ match OverLength /\%121v.\+/
 " 标示不必要的空白字符,autocmd可以缩写为au
 " au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
-"winmanager
+" winmanager
 let g:winManagerWindowLayout='TagList'
 let g:winManagerWidth=30
 nmap <C-W><C-F> :FirstExplorerWindow<CR>
 nmap <C-W><C-B> :BottomExplorerWindow<CR>
 nmap wm :WMToggle<CR>
 
-"minibuferpl.vim for top buff list
+" minibuferpl.vim for top buff list
 let g:miniBufExplMapWindowNavVim=1
 
 " .cpp和.h之间切换
 nmap <silent><leader>sw :FSHere<CR>
 
-"配色
+" 配色
 colors zenburn
 
 " NERDTree
@@ -392,7 +391,7 @@ set foldmethod=syntax
 " 启动vim时关闭折叠
 set nofoldenable
 
-"默认展开所有代码
+" 默认展开所有代码
 set foldlevel=99
 
 " 看到折叠代码的文档字符串
@@ -400,7 +399,7 @@ let g:SimpylFold_docstring_preview=1
 
 " press space to fold/unfold code
 nnoremap <space> za
-"vnoremap <space> zf
+vnoremap <space> zf
 
 " powerline begin----
 let g:Powerline_colorscheme='solarized256'
@@ -427,28 +426,28 @@ let g:indentLine_enabled=1
 
 "----YCM begin----
 " "set runtimepath+=~/.vim/bundle/YouCompleteMe
-"开启YCM基于标签引擎
+" 开启YCM基于标签引擎
 let g:ycm_collect_identifiers_from_tags_files=1
-"注释与字符串中的内容也用于补全
+" 注释与字符串中的内容也用于补全
 let g:ycm_collect_identifiers_from_comments_and_strings=1
 let g:syntastic_ignore_files=[".*\.py$"]
-"语法关键字补全
+" 语法关键字补全
 let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_complete_in_comments=1
 let g:ycm_confirm_extra_conf=0
-"映射按键,没有这个会拦截掉TAB,导致其它插件的TAB不可用
+" 映射按键,没有这个会拦截掉TAB,导致其它插件的TAB不可用
 let g:ycm_key_list_select_completion=['<c-n>', '<Down']
 let g:ycm_key_list_previous_completion=['<c-p>', '<Up']
-"在注释输入中也能补全
+" 在注释输入中也能补全
 let g:ycm_complete_in_comments=1
-"在字符串输入中也能补全
+" 在字符串输入中也能补全
 let g:ycm_complete_in_strings=1
 let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
-"禁用语法检查
+" 禁用语法检查
 let g:ycm_show_diagnostics_ui=0
 " python解释器路径
 let g:ycm_path_to_python_interpreter='/usr/bin/python'
-"从第二个键入字符就开始罗列匹配项
+" 从第二个键入字符就开始罗列匹配项
 let g:ycm_min_num_of_chars_for_completion=2
 " 补全后自动关闭预览窗口
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -456,21 +455,21 @@ let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_cache_omnifunc=0
 " 离开插入模式后自动关闭预览窗口
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-"回车即选中当前项
-inoremap <expr> <CR> pumvisible() ? '<C-y>' : '\<CR>'
-"上下左右键行为
+" 回车即选中当前项
+inoremap <expr> <CR> pumvisible() ? '<C-y>' : '<CR>'
+" 上下左右键行为
 inoremap <expr> <Down> pumvisible() ? '\<C-n>' : '\<Down>'
 inoremap <expr> <Up> pumvisible() ? '\<C-p>' : '\<Up>'
 
 nnoremap <leader>yd :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>yf :YcmCompleter GoToDefinition<CR>
-"跳转到定义处
+" 跳转到定义处
 nnoremap <leader>yg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " show error
 nnoremap <leader>ye :YcmDiags<CR>
 " force to recompile files
 nnoremap <leader>yr :YcmForceCompileAndDiagnostics<CR>
-"----YCM end----
+" ----YCM end----
 
 " Highlighting of class scope is disabled by default. To enable set
 let g:cpp_class_scope_highlight = 1
@@ -484,8 +483,8 @@ let g:cpp_experimental_simple_template_highlight = 1
 " Highlighting of library concepts is enabled by
 let g:cpp_concepts_highlight = 1
 
-"----python----
-"python文件中建议用空格代替TAB,且缩进应为4个空格
+" ----python----
+" python文件中建议用空格代替TAB,且缩进应为4个空格
 autocmd FileType python setlocal et sta sw=4 sts=4
 
 " 支持PEP8风格的缩进
@@ -498,8 +497,10 @@ autocmd FileType python setlocal et sta sw=4 sts=4
 ""            \ set autoindent
 ""            \ set fileformat=unix
 
-"代码折叠可以只以缩进为依据:
+" 代码折叠可以只以缩进为依据:
 autocmd FileType python setlocal foldmethod=indent
+
+let python_highlight_all = 1
 
 " 按F5运行python
 map <F5> :call RunPython()<CR>
@@ -514,3 +515,4 @@ function RunPython()
     let &makeprg = mp
     let &errorformat = ef
 endfunction
+
