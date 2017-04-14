@@ -462,8 +462,6 @@ inoremap <expr> <CR> pumvisible() ? '<C-y>' : '\<CR>'
 inoremap <expr> <Down> pumvisible() ? '\<C-n>' : '\<Down>'
 inoremap <expr> <Up> pumvisible() ? '\<C-p>' : '\<Up>'
 
-
-
 nnoremap <leader>yd :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>yf :YcmCompleter GoToDefinition<CR>
 "跳转到定义处
@@ -473,6 +471,18 @@ nnoremap <leader>ye :YcmDiags<CR>
 " force to recompile files
 nnoremap <leader>yr :YcmForceCompileAndDiagnostics<CR>
 "----YCM end----
+
+" Highlighting of class scope is disabled by default. To enable set
+let g:cpp_class_scope_highlight = 1
+" Highlighting of member variables is disabled by default. To enable set
+let g:cpp_member_variable_highlight = 1
+" hightlight template functions.
+let g:cpp_experimental_simple_template_highlight = 1
+" which works in most cases, but can be a little slow on large files. Alternatively set
+" let g:cpp_experimental_template_highlight = 1
+" which is a faster implementation but has some corner cases where it doesn't work.
+" Highlighting of library concepts is enabled by
+let g:cpp_concepts_highlight = 1
 
 "----python----
 "python文件中建议用空格代替TAB,且缩进应为4个空格
