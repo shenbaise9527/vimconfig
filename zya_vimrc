@@ -1,12 +1,12 @@
 " Vundle start--------
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#rc()
-Plugin 'gmark/vundle'
 
 " Bundle后的插件名来自于http://vim-scripts.org/vim/scripts.html的Name列
 " Add all your plugins here
+Plugin 'VundleVim/Vundle.vim'
 " git submodule add https://github.com/Valloric/YouCompleteMe.git
 " ~/.vim/bundle/YouCompleteMe
 Plugin 'Valloric/YouCompleteMe'
@@ -63,6 +63,12 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 
 " 在cpp和h之间切换,替换a.vim"
 Plugin 'derekwyatt/vim-fswitch'
+
+" go
+Plugin 'fatih/vim-go'
+
+"颜色.
+Plugin 'fatih/molokai'
 
 " All of your plugins must be added before the following line
 call vundle#end()
@@ -332,7 +338,9 @@ let g:miniBufExplMapWindowNavVim=1
 nmap <silent><leader>sw :FSHere<CR>
 
 " 配色
-colors zenburn
+"colors zenburn
+colorscheme molokai
+let g:molokai_original = 1
 
 " NERDTree
 map <F3> :NERDTreeMirror<CR>
@@ -424,6 +432,23 @@ let g:indentLine_enabled=1
 " let g:indentLine_concealcursor='inc'
 " let g:indentLine_concealleavel=2
 
+" vim-go custom mappings
+au FileType go nmap s (go-implements)
+au FileType go nmap i (go-info)
+au FileType go nmap gd (go-doc)
+au FileType go nmap gv (go-doc-vertical)
+au FileType go nmap r (go-run)
+au FileType go nmap b (go-build)
+au FileType go nmap t (go-test)
+au FileType go nmap c (go-coverage)
+au FileType go nmap ds (go-def-split)
+au FileType go nmap dv (go-def-vertical)
+au FileType go nmap dt (go-def-tab)
+au FileType go nmap e (go-rename)
+
+"vim-go settings
+let g:go_fmt_command = "goimports"
+
 "----YCM begin----
 " "set runtimepath+=~/.vim/bundle/YouCompleteMe
 " 开启YCM基于标签引擎
@@ -442,11 +467,12 @@ let g:ycm_key_list_previous_completion=['<c-p>', '<Up']
 let g:ycm_complete_in_comments=1
 " 在字符串输入中也能补全
 let g:ycm_complete_in_strings=1
-let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
 " 禁用语法检查
 let g:ycm_show_diagnostics_ui=0
 " python解释器路径
-let g:ycm_path_to_python_interpreter='/usr/bin/python'
+let g:ycm_path_to_python_interpreter='/usr/bin/python3'
 " 从第二个键入字符就开始罗列匹配项
 let g:ycm_min_num_of_chars_for_completion=2
 " 补全后自动关闭预览窗口
