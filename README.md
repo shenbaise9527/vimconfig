@@ -6,3 +6,4 @@
 5. 针对ycm的安装,参考官网,命令python3 install.py --clang-completer --go-completer来支持C/C++和Golang
 6. ycm支持go,需要先设置好GOPROXY,否则会失败.
 7. export GOPROXY=https://mirrors.aliyun.com/goproxy,在.bashrc/.zshrc中添加该项.
+8. 安装ctags,从[官网下载](http://ctags.sourceforge.net/),否则winmanager插件会有问题
