@@ -70,6 +70,15 @@ Plugin 'fatih/vim-go'
 "颜色.
 Plugin 'fatih/molokai'
 
+"tagbar
+Plugin 'majutsushi/tagbar'
+
+"markdown支持.
+"Plugin 'godlygeek/tabular'
+"Plugin 'plasticboy/vim-markdown'
+Plugin 'iamcco/mathjax-support-for-mkdp'
+Plugin 'iamcco/markdown-preview.vim'
+
 " All of your plugins must be added before the following line
 call vundle#end()
 filetype plugin indent on
@@ -329,7 +338,12 @@ let g:winManagerWindowLayout='TagList'
 let g:winManagerWidth=30
 nmap <C-W><C-F> :FirstExplorerWindow<CR>
 nmap <C-W><C-B> :BottomExplorerWindow<CR>
-nmap wm :WMToggle<CR>
+"nmap wm :WMToggle<CR>
+nmap wm :TagbarToggle<CR>
+"设置宽度.
+let g:tagbar_width=30
+" 自动打开.
+autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.go call tagbar#autoopen()
 
 " minibuferpl.vim for top buff list
 let g:miniBufExplMapWindowNavVim=1
@@ -345,7 +359,8 @@ let g:molokai_original = 1
 " NERDTree
 map <F3> :NERDTreeMirror<CR>
 map <F3> :NERDTreeToggle<CR>
-let g:NERDTreeWinPos="right"
+"let g:NERDTreeWinPos="right"
+let g:NERDTreeWinPos="left"
 let g:NERDTreeWinSize=25
 let g:NERDTreeShowLineNumbers=1
 let g:neocomplcache_enable_at_startup=1
