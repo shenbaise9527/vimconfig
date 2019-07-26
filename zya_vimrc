@@ -342,6 +342,8 @@ nmap <C-W><C-B> :BottomExplorerWindow<CR>
 nmap wm :TagbarToggle<CR>
 "设置宽度.
 let g:tagbar_width=30
+let g:tagbar_autofocus=1
+let g:tagbar_autoclose=1
 " 自动打开.
 autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.go call tagbar#autoopen()
 
@@ -448,21 +450,27 @@ let g:indentLine_enabled=1
 " let g:indentLine_concealleavel=2
 
 " vim-go custom mappings
-au FileType go nmap s (go-implements)
-au FileType go nmap i (go-info)
-au FileType go nmap gd (go-doc)
-au FileType go nmap gv (go-doc-vertical)
-au FileType go nmap r (go-run)
-au FileType go nmap b (go-build)
-au FileType go nmap t (go-test)
-au FileType go nmap c (go-coverage)
-au FileType go nmap ds (go-def-split)
-au FileType go nmap dv (go-def-vertical)
-au FileType go nmap dt (go-def-tab)
-au FileType go nmap e (go-rename)
+au FileType go nmap <leader>s <Plug>(go-implements)
+au FileType go nmap <leader>i <Plug>(go-info)
+au FileType go nmap <leader>gd <Plug>(go-doc)
+au FileType go nmap <leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <leader>ds <Plug>(go-def-split)
+au FileType go nmap <leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <leader>dt <Plug>(go-def-tab)
+au FileType go nmap <leader>e <Plug>(go-rename)
 
 "vim-go settings
 let g:go_fmt_command = "goimports"
+" 高亮类型
+let g:go_highlight_types = 1
+" 高亮属性字段
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
 
 "----YCM begin----
 " "set runtimepath+=~/.vim/bundle/YouCompleteMe
