@@ -222,7 +222,7 @@ set hlsearch
 set incsearch
 
 " 新建文件时,自动插入文件头
-autocmd BufNewFile *.py,*.cpp,*.[ch],*.hpp,*.sh exec ":call SetTitle()"
+autocmd BufNewFile *.py,*.cpp,*.[ch],*.hpp,*.sh,*.go exec ":call SetTitle()"
 " 定义函数SetTitle,自动插入文件
 func SetTitle()
     if &filetype == 'sh'
@@ -251,6 +251,19 @@ func SetTitle()
         call setline(10, "\##########################################")
         call setline(11, "")
         call setline(12, "")
+    elseif &filetype == 'go'
+        call setline(1, "\/**")
+        call setline(2, " * Copyright(c) ".strftime("%Y")." Shenzhen shenbaise9527")
+        call setline(3, " * All Rights Reserved")
+        call setline(4, " * @File        : ".expand("%"))
+        call setline(5, " * @Author      : shenbaise9527")
+        call setline(6, " * @Create      : ".strftime("%Y-%m-%d %H:%M:%S"))
+        call setline(7, " * @Modified    : ".strftime("%Y-%m-%d %H:%M:%S"))
+        call setline(8, " * @version     : 1.0")
+        call setline(9, " * @Description : ")
+        call setline(10, " *\/")
+        call setline(11, "package ")
+        call setline(12, "")
     else
         call setline(1, "\/**")
         call setline(2, " * Copyright(c) ".strftime("%Y")." Shenzhen shenbaise9527")
@@ -270,7 +283,7 @@ endfunc
 " 新建文件后,自动定位到文件末尾
 autocmd BufNewFile * normal G
 
-autocmd FileWritePre,BufWritePre *.cpp,*.[ch],*.hpp,*.py,*.sh call DateModified()
+autocmd FileWritePre,BufWritePre *.cpp,*.[ch],*.hpp,*.py,*.sh,*.go call DateModified()
 func DateModified()
     let zcur_line=line(".")
     let zcur_clo=virtcol(".")
@@ -334,8 +347,8 @@ match OverLength /\%121v.\+/
 " au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " winmanager
-let g:winManagerWindowLayout='TagList'
-let g:winManagerWidth=30
+"let g:winManagerWindowLayout='TagList'
+"let g:winManagerWidth=30
 nmap <C-W><C-F> :FirstExplorerWindow<CR>
 nmap <C-W><C-B> :BottomExplorerWindow<CR>
 "nmap wm :WMToggle<CR>
@@ -346,6 +359,14 @@ let g:tagbar_width=30
 "let g:tagbar_autoclose=1
 " 自动打开.
 autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.go call tagbar#autoopen()
+
+" 控制编译错误时quickfix窗口在最底部"
+autocmd FileType qf wincmd J
+
+" 控制quickfix窗口向上向下移动"
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
 
 " minibuferpl.vim for top buff list
 let g:miniBufExplMapWindowNavVim=1
@@ -471,6 +492,8 @@ let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
+
+" 注释掉代码vim-go/autoload/go/template.vim,L22-28"
 
 "----YCM begin----
 " "set runtimepath+=~/.vim/bundle/YouCompleteMe
