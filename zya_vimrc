@@ -28,6 +28,7 @@ Plugin 'kien/ctrlp.vim'
 
 " git插件
 Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 
 " 工具栏
 Plugin 'Lokaltog/vim-powerline'
