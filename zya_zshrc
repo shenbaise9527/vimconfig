@@ -108,6 +108,6 @@ export GOPROXY=https://mirrors.aliyun.com/goproxy/
 #自动更新的时间间隔,单位是天,设置30天更新一次
 export UPDATE_ZSH_DAYS=1
 
-# 自动补全.
+# 自动补全,[下载地址](https://mimosa-pudica.net/zsh-incremental.html).
 source ~/.oh-my-zsh/plugins/incr/incr*.zsh
 
