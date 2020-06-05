@@ -67,6 +67,7 @@ Plugin 'derekwyatt/vim-fswitch'
 
 " go
 Plugin 'fatih/vim-go'
+Plugin 'AndrewRadev/splitjoin.vim'
 
 "颜色.
 Plugin 'fatih/molokai'
@@ -77,8 +78,11 @@ Plugin 'majutsushi/tagbar'
 "markdown支持.
 "Plugin 'godlygeek/tabular'
 "Plugin 'plasticboy/vim-markdown'
-Plugin 'iamcco/mathjax-support-for-mkdp'
-Plugin 'iamcco/markdown-preview.vim'
+"Plugin 'iamcco/mathjax-support-for-mkdp'
+"Plugin 'iamcco/markdown-preview.vim'
+
+" json"
+Plugin 'elzr/vim-json'
 
 " All of your plugins must be added before the following line
 call vundle#end()
@@ -263,8 +267,9 @@ func SetTitle()
         call setline(8, " * @version     : 1.0")
         call setline(9, " * @Description : ")
         call setline(10, " *\/")
-        call setline(11, "package ")
+        call setline(11, "package main")
         call setline(12, "")
+        call setline(13, "")
     else
         call setline(1, "\/**")
         call setline(2, " * Copyright(c) ".strftime("%Y")." Shenzhen shenbaise9527")
@@ -484,6 +489,7 @@ au FileType go nmap <leader>ds <Plug>(go-def-split)
 au FileType go nmap <leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <leader>dt <Plug>(go-def-tab)
 au FileType go nmap <leader>e <Plug>(go-rename)
+au FileType go nmap <leader>gr <Plug>(go-referrers)
 
 "vim-go settings
 let g:go_fmt_command = "goimports"
@@ -493,6 +499,11 @@ let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
+
+" 高亮操作符.
+let g:go_highlight_operators = 1
+" 高亮额外的类型.
+let g:go_highlight_extra_types = 1
 
 " 注释掉代码vim-go/autoload/go/template.vim,L22-28"
 
@@ -542,6 +553,7 @@ nnoremap <leader>yg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>ye :YcmDiags<CR>
 " force to recompile files
 nnoremap <leader>yr :YcmForceCompileAndDiagnostics<CR>
+let g:ycm_semantic_triggers = {'python,go': ['re!\w{2}'],}
 " ----YCM end----
 
 " Highlighting of class scope is disabled by default. To enable set
@@ -555,6 +567,9 @@ let g:cpp_experimental_simple_template_highlight = 1
 " which is a faster implementation but has some corner cases where it doesn't work.
 " Highlighting of library concepts is enabled by
 let g:cpp_concepts_highlight = 1
+
+" ----json----
+let g:vim_json_syntax_conceal = 0
 
 " ----python----
 " python文件中建议用空格代替TAB,且缩进应为4个空格
